@@ -1,0 +1,38 @@
+name: CI Pipeline - Build and Push Docker Image to ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker Image
+        run: |
+          docker build -t rails-app .
+
+      - name: Tag Docker Image
+        run: |
+          docker tag rails-app:latest 975050146518.dkr.ecr.us-east-1.amazonaws.com/rails-app:latest
+
+      - name: Push Docker Image to ECR
+        run: |
+          docker push 975050146518.dkr.ecr.us-east-1.amazonaws.com/rails-app:latest
+
