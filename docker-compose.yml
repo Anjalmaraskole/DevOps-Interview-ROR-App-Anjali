@@ -20,20 +20,22 @@ services:
     image: webserver
     container_name: webserver
     ports:
-      - "8080:8080"
+      - "8080:80"
     networks:
       - app_network
 
   postgres:
     image: postgres:13.3
+    container_name: postgres_db
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: SecurePass#9876
+      POSTGRES_DB: mydb
     networks:
       - app_network
-
+                   
 networks:
   app_network:
     driver: bridge

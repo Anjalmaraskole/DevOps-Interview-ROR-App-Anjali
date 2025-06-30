@@ -1,0 +1,26 @@
+# Ignore Terraform related files
+.terraform
+*.tfstate
+*.tfstate.*
+
+# Ignore log files
+log
+*.log
+
+# Ignore temporary files
+tmp
+*.tmp
+
+# Ignore test files
+test
+
+# Ignore Git repository data
+.git
+.gitignore
+
+# Ignore Docker related files
+docker-compose.yml
+
+# Ignore AWS provider binaries
+infrastructure/.terraform
+
